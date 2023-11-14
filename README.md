@@ -28,7 +28,7 @@ source venv/bin/activate or venv\Scripts\activate
 python main.py
 ```
 
-<div style="text-align:center"><img src="https://github.com/TheMalwareGuardian/images/options.png" /></div>
+<div style="text-align:center"><img src="images/options.png" /></div>
 
 
 ## References
