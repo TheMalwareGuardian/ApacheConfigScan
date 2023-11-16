@@ -162,11 +162,15 @@ def not_implemented():
     table.field_names = ["Best Practice", "Impact"]
 
     # Best Practices
-    print(f"{Color.RED}NOT IMPLEMENTED{Color.OFF}")
+    print(f"{Color.GREEN}IMPLEMENTED{Color.OFF}")
+    print(f"{Color.YELLOW}NOT IMPLEMENTED{Color.OFF}")
     for apache_best_practice_key, apache_best_practice_key_values in best_practices_data.items():
         # Status True and Not Implemented
-        if apache_best_practice_key_values['status'] and apache_best_practice_key not in best_practices_verified:
-            table.add_row([f"{Color.YELLOW}{apache_best_practice_key_values['name']}{Color.OFF}", apache_best_practice_key_values['impact']])
+        if apache_best_practice_key_values['status']:
+            if apache_best_practice_key not in best_practices_verified:
+                table.add_row([f"{Color.YELLOW}{apache_best_practice_key_values['name']}{Color.OFF}", apache_best_practice_key_values['impact']])
+            else:
+                table.add_row([f"{Color.GREEN}{apache_best_practice_key_values['name']}{Color.OFF}", apache_best_practice_key_values['impact']])
 
     # Print
     print(table)
