@@ -1,5 +1,7 @@
 # Apache Config Scan
 
+<div style="text-align:center"><img src="images/options.png" /></div>
+
 
 ## Description
 
@@ -27,8 +29,6 @@ source venv/bin/activate or venv\Scripts\activate
 ```
 python main.py
 ```
-
-<div style="text-align:center"><img src="images/options.png" /></div>
 
 
 ## References
