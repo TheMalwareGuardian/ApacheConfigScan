@@ -17,7 +17,7 @@ A Python script designed to assess and enforce security best practices in Apache
 
 ```
 git clone https://github.com/TheMalwareGuardian/ApacheConfigScan
-cd ScanTool/
+cd ApacheConfigScan
 python -m venv venv
 pip3 install -r requirements.txt
 source venv/bin/activate or venv\Scripts\activate
