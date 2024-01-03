@@ -62,13 +62,13 @@ def get_config_files(directory, recursive):
     if recursive:
         for root, dirs, files in os.walk(directory):
             for file in files:
-                if '.conf' in file:
+                if '.conf' in file or '.include' in file:
                     config_files.append(os.path.join(root, file))
     else:
         config_files = [
             os.path.join(directory, file)
             for file in os.listdir(directory)
-            if '.conf' in file
+            if '.conf' in file or '.inclue' in file
         ]
     return config_files
 
@@ -77,10 +77,10 @@ def get_config_files(directory, recursive):
 def check_configuration_directory_recursive(recursive_value):
 
     # Ask the user
-    user_directory = input("Enter the directory path where Apache configuration files are located (e.g., C:\\Users\\user1\\Downloads): ")
+    user_directory = input('Enter the directory path where Apache configuration files are located (e.g., C:\\Users\\user1\\Downloads): ')
 
     if not os.path.isdir(user_directory):
-        print("Invalid directory path. Please make sure the directory exists and try again.")
+        print('Invalid directory path. Please make sure the directory exists and try again.')
         return
 
     # Get configuration files
@@ -95,11 +95,11 @@ def check_configuration_directory_recursive(recursive_value):
 def check_configuration_file():
 
     # Ask the user
-    config_file = input("Enter the Apache configuration file (e.g., C:\\Users\\user1\\Downloads\\apache2.conf): ")
+    config_file = input('Enter the Apache configuration file (e.g., C:\\Users\\user1\\Downloads\\apache2.conf): ')
 
     # Is file
     if not os.path.isfile(config_file):
-        print("Invalid file path. Please make sure the file exists and try again.")
+        print('Invalid file path. Please make sure the file exists and try again.')
         return
     else:
         # Configuration
@@ -110,8 +110,8 @@ def check_configuration_file():
 def check_configuration(config_file):
 
     # File name
-    print("File:", os.path.basename(config_file))
-    print("Path:", os.path.dirname(config_file))
+    print('File:', os.path.basename(config_file))
+    print('Path:', os.path.dirname(config_file))
 
     # Read the JSON data
     best_practices_data = read_json_best_practices()
@@ -177,6 +177,7 @@ def not_implemented():
     print('Run the first option of the script to see how to implement each best practice')
     print('\n')
 
+
 # Main
 def main():
 
@@ -223,7 +224,7 @@ def main():
             elif result[0] == option_exit:
                 exit(0)
             else:
-                print("Invalid option. Please choose a valid action.")
+                print('Invalid option. Please choose a valid action.')
 
     except Exception as e:
         print(e)
@@ -231,4 +232,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

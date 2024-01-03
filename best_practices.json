@@ -63,6 +63,7 @@
             "sudo systemctl restart apache2 o sudo systemctl restart httpd"
         ],
         "regex": [
+            "<directory\\s+[^>]*>[\\s\\S]*?options[^>]*none[\\s\\S]*?</directory>",
             "<directory\\s+[^>]*>[\\s\\S]*?options[^>]*-includes[\\s\\S]*?</directory>"
         ]
     },
@@ -134,6 +135,7 @@
             "sudo systemctl restart apache2 o sudo systemctl restart httpd"
         ],
         "regex": [
+            "header set strict-transport-security",
             "header always set strict-transport-security"
         ]
     },
@@ -167,6 +169,22 @@
             "sslprotocol\\s+-all(?!.*\\+sslv2)(?!.*\\+sslv3)",
             "sslprotocol\\s+all(?!.*\\+sslv2)(?=.*-sslv2)(?!.*\\+sslv3)(?=.*-sslv3)",
             "sslprotocol\\s+(?!.*\\+sslv2)(?=.*-sslv2)(?!.*\\+sslv3)(?=.*-sslv3)"
+        ]
+    },
+    "DisableTLSv0TLSv1": {
+        "status": true,
+        "name": "Deshabilitar cifrados TLSv1.0 y TLSv1.1",
+        "description": "Deshabilitar cifrados TLSv1.0 y TLSv1.1",
+        "impact": "Evitar el uso de protocolos inseguros",
+        "configuration": [
+            "sudo vim /etc/apache2/apache2.conf o sudo vim /etc/httpd/conf/httpd.conf",
+            "SSLProtocol -ALL +TLSv1.2",
+            "sudo systemctl restart apache2 o sudo systemctl restart httpd"
+        ],
+        "regex": [
+            "sslprotocol\\s+-all(?!.*\\+tlsv1)(?!.*\\+tlsv1.1)",
+            "sslprotocol\\s+all(?!.*\\+tlsv1)(?=.*-tlsv1)(?!.*\\+tlsv1.1)(?=.*-tlsv1.1)",
+            "sslprotocol\\s+(?!.*\\+tlsv1)(?=.*-tlsv1)(?!.*\\+tlsv1.1)(?=.*-tlsv1.1)"
         ]
     },
     "DisableWeakCipher": {
@@ -205,11 +223,14 @@
         "impact": "Impedir ataques de Clickjacking",
         "configuration": [
             "sudo vim /etc/apache2/apache2.conf o sudo vim /etc/httpd/conf/httpd.conf",
-            "Header always append X-Frame-Options SAMEORIGIN",
+            "Header always set X-Frame-Options SAMEORIGIN",
             "sudo systemctl restart apache2 o sudo systemctl restart httpd"
         ],
         "regex": [
-            "header always append x-frame-options sameorigin"
+            "header set x-frame-options sameorigin",
+            "header always set x-frame-options sameorigin",
+            "header set x-frame-options \"sameorigin\"",
+            "header always set x-frame-options \"sameorigin\""
         ]
     },
     "EnableXXSSProtection": {
@@ -223,7 +244,23 @@
             "sudo systemctl restart apache2 o sudo systemctl restart httpd"
         ],
         "regex": [
-            "header set x-xss-protection \"1; mode=block\""
+            "header set x-xss-protection \"1; mode=block\"",
+            "header always set x-xss-protection \"1; mode=block\""
+        ]
+    },
+    "EnableXContentTypeOptions": {
+        "status": true,
+        "name": "Habilitar cabecera X-Content-Type-Options",
+        "description": "Habilitar cabecera X-Content-Type-Options",
+        "impact": "Bloquear ataques Mime type sniffing",
+        "configuration": [
+            "sudo vim /etc/apache2/apache2.conf o sudo vim /etc/httpd/conf/httpd.conf",
+            "Header set X-Content-Type-Options \"nosniff\"",
+            "sudo systemctl restart apache2 o sudo systemctl restart httpd"
+        ],
+        "regex": [
+            "header set x-content-type-options \"nosniff\"",
+            "header always set x-content-type-options \"nosniff\""
         ]
     },
     "RestrictHTTPMethods": {
@@ -303,6 +340,7 @@
             "Header unset X-Mod-Pagespeed",
             "Header unset X-AspNet-Version",
             "Header unset X-Drupal-Cache",
+            "Header unset X-Generator",
             "Header unset X-Varnish",
             "Header unset X-Varnish-Cache",
             "sudo systemctl restart apache2 o sudo systemctl restart httpd"
@@ -312,6 +350,7 @@
             "header unset x-mod-pagespeed",
             "header unset x-aspnet-version",
             "header unset x-drupal-cache",
+            "header unset x-generator",
             "header unset x-varnish",
             "header unset x-varnish-cache"
         ]
